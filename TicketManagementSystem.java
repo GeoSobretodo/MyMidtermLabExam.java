@@ -8,12 +8,12 @@ public class TicketManagementSystem { // Declaring our Main class.
     
 
     public static void main(String[] args) {
-        int choice;
-        do {
-            displayMenu();
-            choice = getValidIntInput();
+        int choice; // Variable to store user's choice.
+        do { // Main menu loop using a do-while loop.
+            displayMenu();  // Display the main menu options.
+            choice = getValidIntInput(); // Getting a valid integer input from the user.
 
-            switch (choice) {
+            switch (choice) { // Using Switch Statement to handle different munu options.
                 case 1:
                     addTicket();
                     break;
@@ -32,11 +32,11 @@ public class TicketManagementSystem { // Declaring our Main class.
                 default:
                     System.out.println("Invalid menu option. Please try again.");
             }
-        } while (choice != 5);
-        scanner.close();
+        } while (choice != 5);  // Continues loop until the user chooses to exit.
+        scanner.close(); // Closing the scanner to release resources.
     }
 
-    static void displayMenu() {
+    static void displayMenu() { // A Method to display meunu Option.
         System.out.println("\n=== IT Ticket System ===");
         System.out.println("1. Add Ticket");
         System.out.println("2. Update Ticket Status");
@@ -46,60 +46,60 @@ public class TicketManagementSystem { // Declaring our Main class.
         System.out.print("Enter your choice: ");
     }
 
-    static int getValidIntInput() {
+    static int getValidIntInput() { // Getting a valid integer input from the user. 
         while (!scanner.hasNextInt()) {
             System.out.println("Invalid input. Please enter a valid integer.");
         }
-        return scanner.nextInt();
+        return scanner.nextInt(); // Return the valid integer input.
     }
 
-    static void addTicket() {
-        if (ticketCount >= MAX_TICKETS) {
-            System.out.println("Maximum number of tickets reached.");
+    static void addTicket() { 
+        if (ticketCount >= MAX_TICKETS) { // Checking if the maximum number of tickets has been reached.
+            System.out.println("Maximum number of tickets reached."); // Prints the message if the user reached the limit.
             return;
         }
 
         scanner.nextLine();
 
         String description = "";
-        while (description.trim().isEmpty()) {
+        while (description.trim().isEmpty()) { // Using a while loop to ensure the description is not empty.
             System.out.print("Enter issue description: ");
             description = scanner.nextLine();
-            if (description.trim().isEmpty()) {
-                System.out.println("Description cannot be empty. Please enter a valid description.");
+            if (description.trim().isEmpty()) { // Checks if the description is empty.
+                System.out.println("Description cannot be empty. Please enter a valid description."); // Print an error message  if it is empty.
             }
         }
 
         String urgency = "";
         boolean validUrgency = false;
-        while (!validUrgency) {
+        while (!validUrgency) {  // Using a while loop to ensure the urgency level is valid.
             System.out.print("Enter urgency level (Low, Medium, High): ");
             urgency = scanner.nextLine().trim().toLowerCase();
 
-            switch (urgency) {
+            switch (urgency) { // We use again switch statement to check the validity of the urgency level.
                 case "low":
                 case "medium":
                 case "high":
                     validUrgency = true;
                     break;
                 default:
-                    System.out.println("Invalid urgency level. Please enter one of the following: Low, Medium, or High.");
+                    System.out.println("Invalid urgency level. Please enter one of the following: Low, Medium, or High."); // prints a succes message.
             }
         }
 
-        tickets[ticketCount] = new Ticket(ticketCount + 1, description, urgency, "Pending");
-        ticketCount++;
-        System.out.println("Ticket added successfully.");
+        tickets[ticketCount] = new Ticket(ticketCount + 1, description, urgency, "Pending"); // Create a new ticket object and add it to the array.
+        ticketCount++; // Increment the ticket.
+        System.out.println("Ticket added successfully."); // Prints success message.
     }
 
-    static void updateTicketStatus() {
-        if (!showAllTickets()) {
-            System.out.print("Enter the ticket number to update: ");
+    static void updateTicketStatus() { // Using this Method to update tickets status.
+        if (!showAllTickets()) { // Checking if there are any tickets in the system.
+            System.out.print("Enter the ticket number to update: "); 
             int ticketNumber = scanner.nextInt();
 
             boolean validTicketNumber = false;
             while (!validTicketNumber) {
-                if (ticketNumber < 1 || ticketNumber > ticketCount || tickets[ticketNumber - 1].getStatus().equals("Resolved")) {
+                if (ticketNumber < 1 || ticketNumber > ticketCount || tickets[ticketNumber - 1].getStatus().equals("Resolved")) { // Checks if the ticket number is valid and the ticket status is not "Resolved".
                     System.out.println("Invalid ticket number or status.");
                 } else {
                     validTicketNumber = true;
@@ -115,9 +115,9 @@ public class TicketManagementSystem { // Declaring our Main class.
                 System.out.print("Enter new status (In Progress, Resolved): ");
                 newStatus = scanner.nextLine().toLowerCase();
 
-                if (newStatus.equals("in progress") || newStatus.equals("resolved")) {
+                if (newStatus.equals("in progress") || newStatus.equals("resolved")) { // Checks if the new status is valid and update the ticket status.
                     validStatus = true;
-                    tickets[ticketNumber - 1].setStatus(newStatus.substring(0, 1).toUpperCase() + newStatus.substring(1)); // Capitalize the first letter
+                    tickets[ticketNumber - 1].setStatus(newStatus.substring(0, 1).toUpperCase() + newStatus.substring(1)); // Capitalize the first letter.
                     System.out.println("Ticket status updated successfully.");
                 } else {
                     System.out.println("Invalid input. Please enter either 'In Progress' or 'Resolved'.");
@@ -127,18 +127,18 @@ public class TicketManagementSystem { // Declaring our Main class.
     }
 
 
-    static boolean showAllTickets() {
+    static boolean showAllTickets() { // Display all tickets.
         boolean isEmpty = true;
-        if (ticketCount == 0) {
+        if (ticketCount == 0) { // Checks if there are any tickets in the system.
             System.out.println("No tickets in the system.");
         } else {
             isEmpty = false;
             System.out.println("\nAll Tickets:");
-            for (int i = 0; i < ticketCount; i++) {
+            for (int i = 0; i < ticketCount; i++) { // Iterate through the tickets array and prints each tickets. 
                 System.out.println(tickets[i]);
             }
         }
-        return isEmpty;
+        return isEmpty; // Return true if there are no tickets false otherwise.
     }
 
     static void generateReport() {
@@ -148,8 +148,8 @@ public class TicketManagementSystem { // Declaring our Main class.
         }
         int pending = 0;
         int resolved = 0;
-        for (int i = 0; i < ticketCount; i++) {
-            if (tickets[i].getStatus().equals("Pending") || tickets[i].getStatus().equals("In Progress")) {
+        for (int i = 0; i < ticketCount; i++) { 
+            if (tickets[i].getStatus().equals("Pending") || tickets[i].getStatus().equals("In Progress")) { // Checks the ticket status and increment the appropriate counter.
                 pending++;
             } else if (tickets[i].getStatus().equals("Resolved")) {
                 resolved++;
@@ -161,28 +161,28 @@ public class TicketManagementSystem { // Declaring our Main class.
         System.out.println("Resolved Tickets: " + resolved);
     }
 
-    static class Ticket {
+    static class Ticket { // Inner class to represent a ticket.
         private int ticketNumber;
         private String description;
         private String urgency;
         private String status;
 
-        public Ticket(int ticketNumber, String description, String urgency, String status) {
+        public Ticket(int ticketNumber, String description, String urgency, String status) { // Constructor for the ticket class.
             this.ticketNumber = ticketNumber;
             this.description = description;
             this.urgency = urgency;
             this.status = status;
         }
 
-        public String getStatus() {
+        public String getStatus() { //Getter Method for ticket status.
             return status;
         }
 
-        public void setStatus(String status) {
+        public void setStatus(String status) { // Setter Method for ticket status.
             this.status = status;
         }
 
-        @Override
+        @Override // Override the toString() method for easy printing ticket details.
         public String toString() {
             return "Ticket #" + ticketNumber + ": Description = " + description + ", Urgency = " + urgency + ", Status = " + status;
         }
