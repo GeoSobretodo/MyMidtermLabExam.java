@@ -1,10 +1,11 @@
-import java.util.Scanner;
+import java.util.Scanner; // Imports the scanner class.
 
-public class TicketManagementSystem {
-    private static final int MAX_TICKETS = 5;
-    private static Ticket[] tickets = new Ticket[MAX_TICKETS];
-    private static int ticketCount = 0;
-    private static Scanner scanner = new Scanner(System.in);
+public class TicketManagementSystem { // Declaring our Main class.
+    private static final int MAX_TICKETS = 5; // Maximum number of tickets allowed that user to input.
+    private static Ticket[] tickets = new Ticket[MAX_TICKETS]; // Array to hold ticket objects
+    private static int ticketCount = 0;  // To track the numbers of ticket that currently in the system.
+    private static Scanner scanner = new Scanner(System.in); // Scanner object for user input.
+    
 
     public static void main(String[] args) {
         int choice;
@@ -186,4 +187,4 @@ public class TicketManagementSystem {
             return "Ticket #" + ticketNumber + ": Description = " + description + ", Urgency = " + urgency + ", Status = " + status;
         }
     }
-}}
+}
